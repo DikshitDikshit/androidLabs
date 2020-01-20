@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="hello">namaste World</string>
-    <string name="ButtonText">I\’m a button</string>
-
+    <string name="app_name">saddi app</string>
+    <string name="Hello_message">meri GUI vekh</string>
+    <string name="ButtonText">mai button hu</string>
+    <string name="CheckBoxText">aithe.! rakh</string>
+    <drawable name="ImageButton">@drawable/flag2</drawable>
+    <string name="Switch">chalu/band</string>
+    <string name="EditText">likho</string>
+    <string name="toast_message">padh lai</string>
 
 </resources>
