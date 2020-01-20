@@ -1,5 +1,12 @@
+
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="hello">Hello World</string>
-    <string name="ButtonText">I\’m a button</string>
+<string name="app_name">My Application</string>
+<string name="Hello_message">Look at my GUI</string>
+<string name="ButtonText">I\’m a button</string>
+<string name="CheckBoxText">Check this out!</string>
+<drawable name="ImageButton">@drawable/flag</drawable>
+<string name="Switch">Switch on/off</string>
+<string name="EditText">Type Here</string>
+<string name="toast_message">Here is more information</string>
+
 </resources>
