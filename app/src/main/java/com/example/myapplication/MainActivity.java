@@ -1,62 +1,54 @@
 package com.example.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.snackbar.Snackbar;
 
 
 public class MainActivity extends AppCompatActivity  {
 
+    EditText email;
+    SharedPreferences preference;
+    Button login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_main);
-       // setContentView(R.layout.activity_main_linear);
-        // setContentView(R.layout.activity_main_grid);
-        //  setContentView(R.layout.activity_main_relative);
+        setContentView(R.layout.activity_main_layout);
+        email = findViewById(R.id.Lab3editText2);
+        preference = getSharedPreferences("FileName", Context.MODE_PRIVATE);
+        String savedString = preference.getString("ReserveName", "Default value");
 
-        Button button = (Button) findViewById(R.id.button);
+        email.setHint(savedString);
 
-        button.setOnClickListener( new View.OnClickListener(){
-            public void onClick(View v){
-                Toast.makeText(MainActivity.this, getResources().getString(R.string.toast_message), Toast.LENGTH_SHORT).show();
+        login = findViewById(R.id.Lab3LoginBtn);
+        login.setOnClickListener( c->{
+            Intent profilePage = new Intent(MainActivity.this, ProfileActivity.class);
+            EditText et = findViewById(R.id.Lab3editText2);
+            profilePage.putExtra("emailTyped", et.getText().toString());
 
-            } });
-
-
-        CheckBox cb = (CheckBox)findViewById(R.id.checkBox);
-        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            public void onCheckedChanged( CompoundButton buttonView, boolean b) {
-                // update your model (or other business logic) based on isChecked
-
-                Snackbar.make(cb, "Checkbox is " + b, Snackbar.LENGTH_LONG)
-                        .setAction("Undo", clickView -> buttonView.setChecked( !b ))
-                        .show();
-
-            }
+            startActivityForResult(profilePage, 345);
         });
-        Switch box = (Switch)findViewById(R.id.switch1);
-        box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean a) {
-                // update your model (or other business logic) based on isChecked
-
-                Snackbar.make(box, "Switch " + a, Snackbar.LENGTH_LONG)
-                        .setAction("Undo", clickView -> buttonView.setChecked( !a ))
-                        .show();
-
-            }
-        });
+    }
 
 
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        //get an editor object
+        SharedPreferences.Editor editor = preference.edit();
+
+        //save what was typed under the name "ReserveName"
+        String whatWasTyped = email.getText().toString();
+        editor.putString("ReserveName", whatWasTyped);
+
+        //write it to disk:
+        editor.commit();
     }
 }

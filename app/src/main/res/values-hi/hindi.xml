@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">saddi app</string>
     <string name="Hello_message">meri GUI vekh</string>
-    <string name="ButtonText">mai button hu</string>
+    <string name="ButtonText">dabb de</string>
     <string name="CheckBoxText">aithe.! rakh</string>
     <drawable name="ImageButton">@drawable/flag2</drawable>
     <string name="Switch">chalu/band</string>

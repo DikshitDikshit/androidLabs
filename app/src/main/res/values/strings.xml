@@ -1,12 +1,24 @@
-
 <resources>
-<string name="app_name">My Application</string>
-<string name="Hello_message">Look at my GUI</string>
-<string name="ButtonText">I\’m a button</string>
-<string name="CheckBoxText">Check this out!</string>
-<drawable name="ImageButton">@drawable/flag</drawable>
-<string name="Switch">Switch on/off</string>
-<string name="EditText">Type Here</string>
-<string name="toast_message">Here is more information</string>
+
+    <string name="app_name">AndroidLabs</string>
+    <string name="hello_message">Hello World</string>
+    <string name="ButtonText">I\'m a button</string>
+    <string name="ButtonText2">Button</string>
+    <string name="CheckBoxText">Check this out!</string>
+    <string name="SwitchText">Switch on / off</string>
+    <string name="EditText">Type your answer here</string>
+    <string name="TextViewText">Here are my widgets:</string>
+    <string name="Lab3TextView1">Enter your email address:</string>
+    <string name="Lab3TextView2">Enter your password:</string>
+    <string name="Lab3EmailHint">Type email here:</string>
+    <string name="Lab3LoginBtnText">Login</string>
+    <string name="ProfileText">Your profile</string>
+    <string name="NameText">Your name:</string>
+    <string name="NameHintText">Enter your name</string>
+    <string name="EmailTextViewText">Your email:</string>
+    <string name="EmailHintText">Enter your email</string>
+    <string name="PictureTextView">Your picture:</string>
+    <string name="ImagePictureTextView">Click the button above to take a picture</string>
+
 
 </resources>

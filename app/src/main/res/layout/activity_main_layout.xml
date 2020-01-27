@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/Lab3TextView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter your email address">
+
+    </TextView>
+    <EditText
+        android:id="@+id/Lab3editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Type email here">
+    </EditText>
+    <TextView
+        android:id="@+id/Lab3textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Type your password: ">
+    </TextView>
+    <EditText
+        android:id="@+id/Lab3editText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword">
+    </EditText>
+    <Button
+        android:id="@+id/Lab3LoginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        >
+    </Button>
+</LinearLayout>
