@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello_message"> Hello World</string>
+    <string name="app_name">Lab1</string>
+    <string name="emailRequest"> Entrez votre adresse email</string>
+    <string name="emailType">Tapez votre email ici</string>
+    <string name="passRequest">Tapez votre mot de passe</string>
+    <string name="login">s\'identifier</string>
+    <string name="yourProfile">votre profil</string>
+    <string name="yourName">Votre nom:</string>
+    <string name="yourEmail">Votre Email:</string>
+    <string name="yourPic">Ta photo:</string>
+    <string name="clickTheButton">Cliquez sur le bouton ci-dessus pour prendre une photo:</string>
+    <string name="enterName">Entrez votre nom</string>
+    <string name="enterEmail">Entrez votre nom</string>
+    <string name="ButtonText_GoToChat">aller discuter</string>
+    <string name="ButtonText_Send">envoyer</string>
+    <string name="ButtonText_Receive">recevoir</string>
+    <string name="HintText_chat">écrivez ici</string>
+    <string name="deleteMsg">Voulez-vous le supprimer?</string>
+    <string name="rowIs">La ligne sélectionnée est:</string>
+    <string name="dataBaseId">L\'ID de la base de données est: </string>
+</resources>
