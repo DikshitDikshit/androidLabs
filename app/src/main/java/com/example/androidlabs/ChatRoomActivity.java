@@ -1,7 +1,11 @@
 package com.example.androidlabs;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +24,11 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     private EditText editText;
 
     private MyListAdapter adapter;
-
+    private Database dbobj;
+    private SQLiteDatabase db;
+    private static final String SENT = "SENT";
+    private static final String RECEIVED = "RECEIVED";
+    private static final String ACTIVITY_NAME = "ChatRoomActivity";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,27 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                     .create().show();
             return true;
         });
+        dbobj = new Database(this);
+        db = dbobj.getWritableDatabase();
+        String[] columns = {Database.COLUMN_ID, Database.COLUMN_MESAGE,Database.COLUMN_MESSAGE_TYPE};
+        String tableName = Database.TABLE_NAME;
+        Cursor results = db.query(false,tableName,columns,null,null,null,null,null,null);
+        printCursor(results);
+
+        int messageIndex = results.getColumnIndex(Database.COLUMN_MESAGE);
+        int messageTypeIndex = results.getColumnIndex(Database.COLUMN_MESSAGE_TYPE);
+        int idIndex = results.getColumnIndex(Database.COLUMN_ID);
+        results.moveToFirst();
+        while(results.moveToNext()){
+            String message =  results.getString(messageIndex);
+            String messageType = results.getString(messageTypeIndex);
+            long id = results.getLong(idIndex);
+            if(messageType.equals(SENT))
+            adapter.add(new Message(id,message,SENT));
+            else adapter.add(new Message(id,message,RECEIVED));
+        }
+
+
     }
 
     @Override
@@ -62,18 +91,24 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
 
         if (input.length() == 0)
             return;
-
+        ContentValues newRowValues = new ContentValues();
+        newRowValues.put(Database.COLUMN_MESAGE,input);
+        long newId =0;
         switch (v.getId()) {
             case R.id.buttonSend:
-                adapter.add(new Message(input, MessageType.SENT));
+                newRowValues.put(Database.COLUMN_MESSAGE_TYPE,SENT);
+                newId = db.insert(Database.TABLE_NAME,null,newRowValues);
+                adapter.add(new Message(newId,input, SENT));
                 break;
             case R.id.buttonReceive:
-                adapter.add(new Message(input, MessageType.RECEIVED));
+                newRowValues.put(Database.COLUMN_MESSAGE_TYPE,RECEIVED);
+                newId = db.insert(Database.TABLE_NAME,null,newRowValues);
+                adapter.add(new Message(newId, input,RECEIVED));
                 break;
             default:
                 break;
         }
-        adapter.notifyDataSetChanged();
+       // adapter.notifyDataSetChanged();
         editText.setText("");
     }
 
@@ -81,36 +116,8 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     /**
      * MessageType Enum Type
      */
-    private enum MessageType { SENT, RECEIVED }
 
-    /**
-     * Message representing class
-     */
-    private class Message {
-        private String message;
-        private MessageType type;
 
-        Message(String message, MessageType type) {
-            this.message = message;
-            this.type = type;
-        }
-
-        String getMessage() {
-            return message;
-        }
-
-        MessageType getType() {
-            return type;
-        }
-
-        @Override
-        public String toString() {
-            return "Message{" +
-                    "message='" + message + '\'' +
-                    ", type=" + type +
-                    '}';
-        }
-    }
 
     /**
      * Customized List Adapter, with built-in container for Message
@@ -132,17 +139,33 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
             View view = null;
             TextView textView = null;
 
-            if (message.getType() == MessageType.SENT) {
+            if (message.getType() == SENT) {
                 view = inflater.inflate(R.layout.chat_message_received, null);
                 textView = view.findViewById(R.id.textViewReceived);
 
-            } else if (message.getType() == MessageType.RECEIVED) {
+            } else if (message.getType() == RECEIVED) {
                 view = inflater.inflate(R.layout.chat_message_sent, null);
                 textView = view.findViewById(R.id.textViewSent);
             }
             textView.setText(message.getMessage());
 
             return view;
+        }
+    }
+    public void printCursor(Cursor cursor){
+        int columnNumber = cursor.getColumnCount();
+        Log.i(ACTIVITY_NAME, "Column number: "+ columnNumber);
+        for(int i = 0;i<columnNumber;++i){
+            Log.i(ACTIVITY_NAME, "Column["+i+"] name: "+cursor.getColumnName(i));
+        }
+        int rows = cursor.getCount();
+        Log.i(ACTIVITY_NAME, "There are "+rows+" rows in cursor");
+        while(cursor.moveToNext()){
+            StringBuilder string = new StringBuilder();
+            for(int i = 0; i<columnNumber;++i)
+                string.append(cursor.getString(i)+ " ");
+            Log.i(ACTIVITY_NAME, string.toString());
+
         }
     }
 }
