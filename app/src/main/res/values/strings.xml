@@ -13,6 +13,7 @@
     <string name="enterName">Enter your name</string>
     <string name="enterEmail">Enter your email</string>
     <string name="ButtonText_GoToChat">Go to chat</string>
+    <string name="ButtonText_GoToWeather">Go to Weather</string>
     <string name="ButtonText_Send">Send</string>
     <string name="ButtonText_Receive">Receive</string>
     <string name="HintText_chat">Type here</string>
