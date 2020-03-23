@@ -13,10 +13,9 @@
         android:layout_gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/currentTemp"
@@ -28,7 +27,6 @@
         android:text="current temp"
         app:layout_constraintBottom_toTopOf="@+id/minTemp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -41,7 +39,7 @@
         android:text="min temp"
         app:layout_constraintBottom_toTopOf="@+id/maxTemp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.429"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -53,7 +51,7 @@
         android:text="max temp"
         app:layout_constraintBottom_toTopOf="@+id/uvRating"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -62,11 +60,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/maxTemp"
         android:layout_alignParentLeft="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
         android:text="uv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_gravity="center"/>
+        app:layout_constraintHorizontal_bias="0.336"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -74,6 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="32dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/currentTemp"
         app:layout_constraintEnd_toEndOf="parent"
