@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:text="@string/ButtonText_Send" />
+
+    android:text="@string/ButtonText_Receive" />
 
     <EditText
         android:id="@+id/editTextChatMsg"
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@id/listConversation"
-        android:text="@string/ButtonText_Receive" />
+        android:text="@string/ButtonText_Send" />
     <FrameLayout
         android:id="@+id/fragmentLocation"
         android:layout_width="match_parent"
