@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".WeatherForecast"></activity>
+        <activity android:name=".DetailsFragment"></activity>
+        <activity android:name=".ContainerActivity" />
+        <activity android:name=".MyDatabaseOpenHelper" />
+        <activity android:name=".Message" />
         <activity android:name=".ChatRoomActivity"></activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MainActivity">

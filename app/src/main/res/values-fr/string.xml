@@ -19,6 +19,7 @@
     <string name="HintText_chat">écrivez ici</string>
     <string name="deleteMsg">Voulez-vous le supprimer?</string>
     <string name="rowIs">La ligne sélectionnée est:</string>
-    <string name="ButtonText_GoToWeather">aller temps</string>
     <string name="dataBaseId">L\'ID de la base de données est: </string>
+    <!--    <string name="ButtonText_StartWeatherQuery">requête météo</string>-->
+    <string name="GoToWeather">Aller à la page météo</string>
 </resources>

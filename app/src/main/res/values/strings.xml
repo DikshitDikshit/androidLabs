@@ -1,23 +1,28 @@
+
 <resources>
-    <string name="app_name">Lab1</string>
-    <string name="hello_message"> Hello World</string>
-    <string name="emailRequest"> Enter your email address</string>
-    <string name="emailType">Type email here</string>
-    <string name="passRequest">Type your password</string>
-    <string name="login">Login</string>
-    <string name="yourProfile">Your Profile</string>
-    <string name="yourName">Your Name:</string>
-    <string name="yourEmail">Your Email:</string>
-    <string name="yourPic">Your Picture:</string>
-    <string name="clickTheButton">Click the button above to take a picture:</string>
-    <string name="enterName">Enter your name</string>
-    <string name="enterEmail">Enter your email</string>
-    <string name="ButtonText_GoToChat">Go to chat</string>
-    <string name="ButtonText_GoToWeather">Go to Weather</string>
-    <string name="ButtonText_Send">Send</string>
-    <string name="ButtonText_Receive">Receive</string>
-    <string name="HintText_chat">Type here</string>
-    <string name="deleteMsg">Do you want to delete this?</string>
-    <string name="rowIs">The selected row is: </string>
-    <string name="dataBaseId">The database ID is: </string>
+<string name="app_name">Lab1</string>
+<string name="hello_message"> Hello World</string>
+<string name="emailRequest"> Enter your email address</string>
+<string name="emailType">Type email here</string>
+<string name="passRequest">Type your password</string>
+<string name="login">Login</string>
+<string name="yourProfile">Your Profile</string>
+<string name="yourName">Your Name:</string>
+<string name="yourEmail">Your Email:</string>
+<string name="yourPic">Your Picture:</string>
+<string name="clickTheButton">Click the button above to take a picture:</string>
+<string name="enterName">Enter your name</string>
+<string name="enterEmail">Enter your email</string>
+<string name="ButtonText_GoToChat">Go to chat</string>
+<string name="ButtonText_Send">Send</string>
+<string name="ButtonText_Receive">Receive</string>
+<string name="HintText_chat">Type here</string>
+<string name="deleteMsg">Do you want to delete this?</string>
+<string name="rowIs">The selected row is: </string>
+<string name="dataBaseId">The database ID is: </string>
+<!--    <string name="ButtonText_StartWeatherQuery">Weather Query</string>-->
+<string name="ButtonText_GoToWeather">Go to Weather</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+<string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

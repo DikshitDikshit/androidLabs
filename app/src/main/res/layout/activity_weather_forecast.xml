@@ -5,44 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:layout_marginTop="27dp"
-    android:layout_marginBottom="27dp"
-    android:layout_marginLeft="48dp"
-    android:layout_marginRight="48dp"
-    >
-    <TextView
-        android:id="@+id/emailRequest"
+    tools:context=".WeatherForecast">
+
+    <ProgressBar
+        android:id="@+id/progressBar_weatherQuery"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/emailRequest" />
-    <EditText
-        android:id="@+id/TypeEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="@string/emailType"
-    />
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/imageView_weather"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
 
     <TextView
-        android:id="@+id/passwordRequest"
+        android:id="@+id/textView_currentTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/passRequest" />
+        android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/TypePass"
+    <TextView
+        android:id="@+id/textView_minTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint=""
-    />
+        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/logbutton"
+    <TextView
+        android:id="@+id/textView_maxTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-    />
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView_UVRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp" />
+
+
 
 </LinearLayout>

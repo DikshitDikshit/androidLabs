@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,137 +26,180 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 public class WeatherForecast extends AppCompatActivity {
+//    private TextView tvCurTemp;
+//    private TextView tvMaxTemp;
+//    private TextView tvMinTemp;
+//    private ProgressBar progressBar;
+//    private ImageView imageViewWeatherIcon;
 
-    private ProgressBar progressBar;
-    private TextView currentTemp, minTemp, maxTemp, uvRating;
-    private ImageView weather;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.weather);
+        setContentView(R.layout.activity_weather_forecast);
 
-        ForecastQuery networkThread = new ForecastQuery();
-        networkThread.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric");
+//        ProgressBar progressBar = findViewById(R.id.progressBar_weatherQuery);
+//        progressBar.setVisibility(View.VISIBLE);
+//        tvCurTemp = findViewById(R.id.textView_currentTemp);
+//        tvMaxTemp = findViewById(R.id.textView_maxTemp);
+//        tvMinTemp = findViewById(R.id.textView_minTemp);
+//        imageViewWeatherIcon = findViewById(R.id.imageView_weather);
 
-        weather = (ImageView)findViewById(R.id.weather);
-        currentTemp = (TextView)findViewById(R.id.currentTemp);
-        minTemp = (TextView)findViewById(R.id.minTemp);
-        maxTemp = (TextView)findViewById(R.id.maxTemp);
-        uvRating = (TextView)findViewById(R.id.uvRating);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
+//        Button btnWeatherQuery = findViewById(R.id.button_WeatherQuery);
+//        btnWeatherQuery.setOnClickListener(v -> {
+        ForecastQuery forecastQuery = new ForecastQuery();
+        forecastQuery.execute();
+//        });
     }
 
-    // a subclass of AsyncTask                  Type1    Type2    Type3
-    private class ForecastQuery extends AsyncTask<String, Integer, String>
-    {
-        String tempValue, min, max, uv, weatherIcon;
-        Bitmap image;
-        private final String IMG_URL = "http://openweathermap.org/img/w/";
+    private class ForecastQuery extends AsyncTask<String, Integer, String> {
+
+        private double uvIndex;
+        private String minTemp;
+        private String maxTemp;
+        private String currentTemp;
+        private Bitmap bmpWeather;
+
+
         @Override
-        protected String doInBackground(String ... params) {
+        protected void onPostExecute(String s) {
+//            tvCurTemp.setText(currentTemp);
+//            tvMaxTemp.setText(maxTemp);
+//            tvMinTemp.setText(minTemp);
+//            progressBar.setVisibility(View.INVISIBLE);
+//            imageViewWeatherIcon.setImageBitmap(bmpWeather);
+            TextView textView = findViewById(R.id.textView_currentTemp);
+            textView.setText("Current Temperature:\t" + currentTemp);
+
+            textView = findViewById(R.id.textView_maxTemp);
+            textView.setText("Max Temperature:\t" + maxTemp);
+
+            textView = findViewById(R.id.textView_minTemp);
+            textView.setText("Max Temperature:\t" + minTemp);
+
+            ImageView imageView = findViewById(R.id.imageView_weather);
+            imageView.setImageBitmap(bmpWeather);
+
+            textView = findViewById(R.id.textView_UVRating);
+            textView.setText("UV Rating:\t" + uvIndex);
+
+            ProgressBar progressBar = findViewById(R.id.progressBar_weatherQuery);
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+
+        /**
+         * Runs on the UI thread after {@link #publishProgress} is invoked.
+         * The specified values are the values passed to {@link #publishProgress}.
+         *
+         * @param values The values indicating progress.
+         * @see #publishProgress
+         * @see #doInBackground
+         */
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            ProgressBar progressBar = findViewById(R.id.progressBar_weatherQuery);
+            progressBar.setProgress(values[0]);
+        }
+
+        /**
+         * Override this method to perform a computation on a background thread. The
+         * specified parameters are the parameters passed to {@link #execute}
+         * by the caller of this task.
+         * <p>
+         * This method can call {@link #publishProgress} to publish updates
+         * on the UI thread.
+         *
+         * @param strings The parameters of the task.
+         * @return A result, defined by the subclass of this task.
+         * @see #onPreExecute()
+         * @see #onPostExecute
+         * @see #publishProgress
+         */
+        @Override
+        protected String doInBackground(String... strings) {
+
             try {
-
-                //get the string url:
-                String myUrl = params[0];
-
                 //create the network connection:
-                URL url = new URL(myUrl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                InputStream inStream = conn.getInputStream();
+                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream inStream = urlConnection.getInputStream();
+
 
                 //create a pull parser:
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(false);
                 XmlPullParser xpp = factory.newPullParser();
-                xpp.setInput( inStream  , "UTF-8");
-
+                xpp.setInput(inStream, "UTF-8");  //inStream comes from line 46
 
                 //now loop over the XML:
-                while(xpp.getEventType() != XmlPullParser.END_DOCUMENT)
-                {
-                    if(xpp.getEventType() == XmlPullParser.START_TAG)
-                    {
+                while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
+                    if (xpp.getEventType() == XmlPullParser.START_TAG) {
                         String tagName = xpp.getName(); //get the name of the starting tag: <tagName>
-                        if(tagName.equals("temperature"))
-                        {
-                            tempValue = xpp.getAttributeValue(null, "value");
-                            Log.e("AsyncTask", "Found value message: "+ tempValue);
+                        if (tagName.equals("temperature")) {
+                            currentTemp = xpp.getAttributeValue(null, "value");
+                            Log.i("Weather Query AsyncTask", "Found parameter temperature: " + currentTemp);
                             publishProgress(25);
+                            SystemClock.sleep(500);
 
-                            Thread.sleep(500);
-                            min = xpp.getAttributeValue(null, "min");
-                            Log.e("AsyncTask", "Found min message: "+ min);
+                            minTemp = xpp.getAttributeValue(null, "min");
+                            Log.i("Weather Query AsyncTask", "Found parameter temperature: " + minTemp);
                             publishProgress(50);
+                            SystemClock.sleep(500);
 
-                            Thread.sleep(500);
-                            max = xpp.getAttributeValue(null, "max");
-                            Log.e("AsyncTask", "Found max message: "+ max);
+                            maxTemp = xpp.getAttributeValue(null, "min");
+                            Log.i("Weather Query AsyncTask", "Found parameter temperature: " + maxTemp);
                             publishProgress(75);
-
-                        }else if (tagName.equals("weather")) {
-                            weatherIcon = xpp.getAttributeValue(null, "icon");
-                            String fileName = weatherIcon + ".png";
-                            Log.e("AsyncTask", "Looking for icon name: "+ fileName);
-                            if (fileExistance(fileName)){
-                                Log.e("AsyncTask", "Found icon name \""+fileName+"\" in local");
+                            SystemClock.sleep(500);
+                        }
+                        else if (tagName.equals("weather")) {
+                            String iconName = xpp.getAttributeValue(null, "icon");
+                            Log.i("Weather Query AsyncTask", "Found parameter weather: " + iconName);
+                            String iconFile = iconName + ".png";
+                            if (fileExistance(iconFile)) {
+                                Log.i("Weather Query AsyncTask", "IconFile[" + iconName + "] already downloaded!");
+                                // file exists
                                 FileInputStream fis = null;
                                 try {
-                                    fis = new FileInputStream(getBaseContext().getFileStreamPath(fileName));
-                                }catch (FileNotFoundException e) {
+                                    fis = openFileInput(iconFile);
+                                }
+                                catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
-                                image = BitmapFactory.decodeStream(fis);
-
-
-                            }else {
-                                Log.e("AsyncTask", "icon name \""+fileName+"\" doesn't exist in local");
-                                Log.e("AsyncTask", "Downloading image from the internet");
-                                //download image
-
-                                image  = HTTPUtils.getImage(IMG_URL+fileName);
-                                Log.e("AsyncTask", "Saving to local.....");
-                                FileOutputStream outputStream = null;
-                                try {
-                                    outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
-                                    image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                                    outputStream.flush();
-                                    outputStream.close();
-                                } catch (Exception e) {
-                                    Log.e("AsyncTask", "Download fail");
-                                }
-
-
+                                bmpWeather = BitmapFactory.decodeStream(fis);
 
                             }
+                            else {
+                                // file doesn't exist, download it from internet
+                                Log.i("Weather Query AsyncTask", "IconFile[" + iconFile + "] not found, download it from internet!");
+                                String weatherIconRequestURL = "http://openweathermap.org/img/w/" + iconFile;
+
+                                URL urlWeatherIconServer = new URL(weatherIconRequestURL);
+                                URLConnection connection = urlWeatherIconServer.openConnection();
+                                connection.connect();
+                                int responseCode = ((HttpURLConnection) connection).getResponseCode();
+                                if (responseCode == 200) {
+                                    bmpWeather = BitmapFactory.decodeStream(connection.getInputStream());
+                                    //save locally
+                                    FileOutputStream outputStream = openFileOutput( iconFile, Context.MODE_PRIVATE);
+                                    bmpWeather.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                                    outputStream.flush();
+                                    outputStream.close();
+                                }
+                            }
                             publishProgress(100);
-
-
                         }
-
-
                     }
-
                     xpp.next(); //advance to next XML event
                 }
 
+                // get uv index
+                url = new URL("http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
+                urlConnection = (HttpURLConnection) url.openConnection();
+                inStream = urlConnection.getInputStream();
 
-                //Start of JSON reading of UV factor:
-
-                //create the network connection:
-                URL UVurl = new URL("http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
-                HttpURLConnection UVConnection = (HttpURLConnection) UVurl.openConnection();
-                inStream = UVConnection.getInputStream();
-
-                //create a JSON object from the response
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
 
@@ -165,77 +209,21 @@ public class WeatherForecast extends AppCompatActivity {
                     sb.append(line + "\n");
                 }
                 String result = sb.toString();
-
-                //now a JSON table:
                 JSONObject jObject = new JSONObject(result);
-                uv = String.valueOf(jObject.getDouble("value"));
-                Log.e("AsyncTask", "Found UV: " +uv);
+                uvIndex = jObject.getDouble("value");
 
-
-            }catch (Exception ex)
-            {
-                Log.e("Crash!!", ex.getMessage() );
+            } catch (Exception ex) {
+                Log.e("Crash!!", ex.getMessage());
             }
 
+            //return type 3, which is String:
             return "Finished task";
+
         }
 
-
-
-        public boolean fileExistance(String fname){
+        public boolean fileExistance(String fname) {
             File file = getBaseContext().getFileStreamPath(fname);
-            return file.exists();   }
-
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setProgress(values[0]);
-//
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            currentTemp.setText("Current temperature: "+tempValue+"°C");
-            minTemp.setText("Min temperature: "+min+"°C");
-            maxTemp.setText("Max temperature: "+max+"°C");
-            uvRating.setText("UV Rating: "+uv);
-            weather.setImageBitmap(image);
-            progressBar.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private static class HTTPUtils {
-        public static Bitmap getImage(URL url) {
-            HttpURLConnection connection = null;
-
-            try {
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                int responseCode = connection.getResponseCode();
-                if (responseCode == 200) {
-                    return BitmapFactory.decodeStream(connection.getInputStream());
-
-                } else
-                    return null;
-            } catch (Exception e) {
-                return null;
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-            }
-        }
-        public static Bitmap getImage(String urlString) {
-
-            try {
-                URL url = new URL(urlString);
-
-                return getImage(url);
-
-            } catch (MalformedURLException e) {
-                return null;
-            }
+            return file.exists();
         }
 
     }

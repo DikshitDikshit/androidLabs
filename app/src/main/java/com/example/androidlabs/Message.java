@@ -1,14 +1,21 @@
 package com.example.androidlabs;
 
+
+
+/**
+ * Message representing class
+ */
 public class Message {
+    private long id;
     private String message;
     private String type;
-    private long id;
+
     Message(long id,String message, String type) {
         this.id = id;
         this.message = message;
         this.type = type;
     }
+
 
     String getMessage() {
         return message;
@@ -16,6 +23,9 @@ public class Message {
 
     String getType() {
         return type;
+    }
+    public long getId() {
+        return id;
     }
 
     @Override
