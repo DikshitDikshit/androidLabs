@@ -22,4 +22,6 @@
     <string name="dataBaseId">L\'ID de la base de données est: </string>
     <!--    <string name="ButtonText_StartWeatherQuery">requête météo</string>-->
     <string name="GoToWeather">Aller à la page météo</string>
+    <string name="open">ouvert</string>
+    <string name="close">proche</string>
 </resources>

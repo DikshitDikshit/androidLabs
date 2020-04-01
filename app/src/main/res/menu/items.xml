@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/facebook"
+        android:title="facebook"
+        android:icon="@drawable/facebook"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
+
+    <item android:id="@+id/instagram"
+        android:title="instagram"
+        android:icon="@drawable/instagram"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/twitter"
+        android:title="twitter"
+        android:icon="@drawable/twitter"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/search_item"
+        android:orderInCategory="50"
+        app:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_search_category_default"
+        app:showAsAction="always|collapseActionView"
+        android:title="Search"/>    <!-- This uses showAsAction=always, so look at icon= parameter -->
+
+
+    <item android:id="@+id/Chat_Page"
+        android:icon="@drawable/global"
+        android:title="Chat Page"
+        app:showAsAction="never"
+        android:orderInCategory="400"/> <!-- This uses showAsAction=never, so look at title= parameter -->
+
+    <item android:id="@+id/Weather_Forecast"
+        android:icon="@drawable/global"
+        android:title="Weather Forecast"
+        app:showAsAction="never"
+        android:orderInCategory="400"/>
+
+    <item android:id="@+id/Go_back_to_login"
+        android:icon="@drawable/global"
+        android:title="Go back to login"
+        app:showAsAction="never"
+        android:orderInCategory="400"/>
+</menu>

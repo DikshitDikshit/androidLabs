@@ -48,13 +48,21 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(chatIntent);
         });
 
- /*       Button goToWeatherBtn = (Button) findViewById(R.id.GoToWeatherPage);
+        Button goToWeatherBtn = (Button) findViewById(R.id.GoToWeatherPage);
         goToWeatherBtn.setOnClickListener(c -> {
             Intent goToMenuPage = new Intent(ProfileActivity.this, WeatherForecast.class);
 
             startActivityForResult(goToMenuPage, 234);
 
-        });*/
+        });
+        goToWeatherBtn = (Button) findViewById(R.id.GoToToolbrPage);
+        goToWeatherBtn.setOnClickListener(c -> {
+            Intent goToMenuPage = new Intent(ProfileActivity.this, TestToolbar.class);
+
+            startActivityForResult(goToMenuPage, 234);
+
+        });
+
 
     }
 

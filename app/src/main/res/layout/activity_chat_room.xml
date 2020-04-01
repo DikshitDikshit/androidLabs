@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="27dp"
+    android:layout_marginBottom="27dp"
+    android:layout_marginLeft="48dp"
+    android:layout_marginRight="48dp"
+    >
 
     <ListView
         android:id="@+id/listConversation"
@@ -20,8 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:text="@string/ButtonText_Receive" />
-
+        android:text="@string/ButtonText_Send" />
 
     <EditText
         android:id="@+id/editTextChatMsg"
@@ -39,5 +43,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/ButtonText_Send" />
+        android:text="@string/ButtonText_Receive" />
 </RelativeLayout>

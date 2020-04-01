@@ -20,14 +20,14 @@
     <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_fragdetail_message"
+    android:layout_below="@id/tv_fragdetail_message"
         android:id="@+id/tv_fragdetail_message_type"/>
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/tv_fragdetail_message"-->
-    <!--        android:id="@+id/tv_fragdetail_message_type"-->
-    <!--        android:textSize="30sp"/>-->
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/tv_fragdetail_message"-->
+<!--        android:id="@+id/tv_fragdetail_message_type"-->
+<!--        android:textSize="30sp"/>-->
 
     <Button
         android:id="@+id/btn_fragdetail_delete"
